@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sacred Oak & Fuzzy Bee Task Sanctuary</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for Task Completion Dopamine Boost -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0f3844 0%, #175261 40%, #0d2b33 100%);
+            min-height: 100vh;
+            color: #f0fdfa;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', cursive;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 56, 68, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2dd4bf;
+            border-radius: 9999px;
+        }
+
+        /* Floating Bee Animations */
+        @keyframes floatBee1 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, -20px) rotate(5deg); }
+            50% { transform: translate(-10px, -35px) rotate(-3deg); }
+            75% { transform: translate(-20px, -10px) rotate(4deg); }
+        }
+
+        @keyframes floatBee2 {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            30% { transform: translate(-20px, -15px) rotate(-6deg); }
+            60% { transform: translate(10px, -30px) rotate(4deg); }
+            80% { transform: translate(25px, -5px) rotate(-2deg); }
+        }
+
+        .animate-bee-1 {
+            animation: floatBee1 6s ease-in-out infinite;
+        }
+
+        .animate-bee-2 {
+            animation: floatBee2 7.5s ease-in-out infinite;
+        }
+
+        /* Ripple Animation for Babbling Brook */
+        @keyframes brookRipple {
+            0% { transform: translateX(0) scaleY(1); opacity: 0.6; }
+            50% { transform: translateX(15px) scaleY(1.1); opacity: 0.9; }
+            100% { transform: translateX(0) scaleY(1); opacity: 0.6; }
+        }
+
+        .brook-wave {
+            animation: brookRipple 4s ease-in-out infinite;
+        }
+
+        /* Pulsing Glow */
+        @keyframes fairyGlow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.6)); }
+            50% { filter: drop-shadow(0 0 16px rgba(253, 224, 71, 0.9)); }
+        }
+
+        .glow-fairy {
+            animation: fairyGlow 3s ease-in-out infinite;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(19, 64, 77, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 212, 191, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(13, 43, 51, 0.75);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            transition: all 0.25s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Honey Nectar Animation Path */
+        @keyframes nectarFly {
+            0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+            20% { opacity: 1; transform: translate(-30px, -60px) scale(1.1); }
+            80% { opacity: 1; transform: translate(-150px, -180px) scale(1); }
+            100% { opacity: 0; transform: translate(-220px, -240px) scale(0.4); }
+        }
+
+        .flying-nectar-bee {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: nectarFly 1.8s forwards ease-in-out;
+        }
+    </style>
+</head>
+<body class="p-2 md:p-6 pb-12">
+
+    <!-- Header Banner -->
+    <header class="max-w-7xl mx-auto mb-6 glass-panel rounded-3xl p-4 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 relative overflow-hidden">
+        <!-- Sunburst ambient backdrop -->
+        <div class="absolute -top-24 -left-24 w-60 h-60 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-teal-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-4 z-10">
+            <div class="relative w-16 h-16 flex-shrink-0 flex items-center justify-center bg-gradient-to-tr from-amber-500 to-teal-400 rounded-2xl shadow-lg border border-amber-300/40">
+                <!-- Fuzzy Bee Mascot SVG -->
+                <svg class="w-12 h-12 glow-fairy" viewBox="0 0 100 100">
+                    <ellipse cx="50" cy="55" rx="28" ry="22" fill="#FBBF24"/>
+                    <path d="M 38 35 Q 32 15 22 18" stroke="#1E293B" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <circle cx="22" cy="18" r="4" fill="#F59E0B"/>
+                    <path d="M 62 35 Q 68 15 78 18" stroke="#1E293B" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <circle cx="78" cy="18" r="4" fill="#F59E0B"/>
+                    <!-- Stripes -->
+                    <path d="M 36 40 Q 50 45 64 40" stroke="#1E293B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M 30 55 Q 50 62 70 55" stroke="#1E293B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <path d="M 34 70 Q 50 75 66 70" stroke="#1E293B" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <!-- Wings -->
+                    <ellipse cx="36" cy="32" rx="14" ry="20" fill="rgba(255,255,255,0.75)" transform="rotate(-30 36 32)" stroke="#94A3B8" stroke-width="1.5"/>
+                    <ellipse cx="64" cy="32" rx="14" ry="20" fill="rgba(255,255,255,0.75)" transform="rotate(30 64 32)" stroke="#94A3B8" stroke-width="1.5"/>
+                    <!-- Eyes & Cheeks -->
+                    <circle cx="43" cy="52" r="3" fill="#0F172A"/>
+                    <circle cx="57" cy="52" r="3" fill="#0F172A"/>
+                    <circle cx="37" cy="57" r="3.5" fill="#F43F5E" opacity="0.6"/>
+                    <circle cx="63" cy="57" r="3.5" fill="#F43F5E" opacity="0.6"/>
+                    <path d="M 47 58 Q 50 61 53 58" stroke="#0F172A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-amber-200 via-teal-200 to-emerald-200 bg-clip-text text-transparent">
+                    The Sacred Oak & Fuzzy Bee Task Sanctuary
+                </h1>
+                <p class="text-xs md:text-sm text-teal-200/80 flex items-center gap-2 mt-0.5">
+                    <i class="fa-solid font-sparkles text-amber-300"></i>
+                    <span>ADHD Haven for Daily & Teaching Tasks</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Mascot Companion Prompt Bubble -->
+        <div class="z-10 flex items-center gap-3 bg-teal-950/60 border border-teal-500/30 rounded-2xl px-4 py-2.5 max-w-md w-full md:w-auto">
+            <div class="text-amber-300 text-xl"><i class="fa-solid fa-comment-dots"></i></div>
+            <p id="mascotMessage" class="text-xs md:text-sm text-amber-100 italic font-medium">
+                "Bzz! Barnaby and Clover are excited to help you sprout new golden oak blossoms today!"
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Grid Layout -->
+    <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Interactive Tree Canvas & Babbling Brook (5 Cols) -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- Sacred Oak Canvas Container -->
+            <div class="glass-panel rounded-3xl p-5 relative overflow-hidden flex flex-col items-center shadow-2xl">
+                <div class="flex items-center justify-between w-full mb-3">
+                    <div class="flex items-center gap-2 text-amber-300 font-heading text-lg font-semibold">
+                        <i class="fa-solid fa-tree text-emerald-400"></i>
+                        <span>Sacred Celtic Oak</span>
+                    </div>
+                    <span id="blossomCountBadge" class="bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs px-3 py-1 rounded-full font-semibold">
+                        ✨ 0 Golden Blossoms
+                    </span>
+                </div>
+
+                <!-- Visual Oak Canvas with SVG Dynamic Overlay -->
+                <div class="relative w-full h-[380px] bg-gradient-to-b from-sky-900/60 via-teal-900/40 to-emerald-950/80 rounded-2xl overflow-hidden border border-teal-500/20 flex items-center justify-center">
+                    
+                    <!-- Floating Background Pollen Particles -->
+                    <div id="pollenContainer" class="absolute inset-0 pointer-events-none"></div>
+
+                    <!-- SVG Tree of Life & Brook -->
+                    <svg id="treeSvg" class="w-full h-full" viewBox="0 0 500 450" preserveAspectRatio="xMidYMid meet">
+                        <defs>
+                            <!-- Celtic Gradient Trunk -->
+                            <linearGradient id="barkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3d2314"/>
+                                <stop offset="50%" stop-color="#5a3825"/>
+                                <stop offset="100%" stop-color="#24130a"/>
+                            </linearGradient>
+                            <!-- Leaf Canopy Gradient -->
+                            <radialGradient id="canopyGradient" cx="50%" cy="40%" r="50%">
+                                <stop offset="0%" stop-color="#34d399"/>
+                                <stop offset="60%" stop-color="#059669"/>
+                                <stop offset="100%" stop-color="#064e3b"/>
+                            </radialGradient>
+                            <!-- Water Babbling Brook Gradient -->
+                            <linearGradient id="brookGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.9"/>
+                                <stop offset="100%" stop-color="#0f766e" stop-opacity="0.8"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Canopy Outer Soft Glow -->
+                        <circle cx="250" cy="180" r="140" fill="url(#canopyGradient)" opacity="0.85"/>
+                        <circle cx="180" cy="150" r="85" fill="#10b981" opacity="0.6"/>
+                        <circle cx="320" cy="150" r="85" fill="#059669" opacity="0.6"/>
+                        <circle cx="250" cy="110" r="90" fill="#34d399" opacity="0.5"/>
+
+                        <!-- Sacred Oak Celtic Knotwork Trunk & Mossy Roots -->
+                        <!-- Roots -->
+                        <path d="M 170 380 Q 210 350 230 310 Q 250 270 240 220" stroke="url(#barkGradient)" stroke-width="28" fill="none" stroke-linecap="round"/>
+                        <path d="M 330 380 Q 290 350 270 310 Q 250 270 260 220" stroke="url(#barkGradient)" stroke-width="28" fill="none" stroke-linecap="round"/>
+                        <path d="M 250 390 Q 250 320 250 220" stroke="url(#barkGradient)" stroke-width="36" fill="none" stroke-linecap="round"/>
+
+                        <!-- Celtic Roots Sweeps -->
+                        <path d="M 120 400 C 180 390, 200 370, 230 340" stroke="#24130a" stroke-width="14" fill="none" stroke-linecap="round"/>
+                        <path d="M 380 400 C 320 390, 300 370, 270 340" stroke="#24130a" stroke-width="14" fill="none" stroke-linecap="round"/>
+
+                        <!-- Trunk Bark Details -->
+                        <path d="M 240 230 Q 260 260 242 310" stroke="#1f1108" stroke-width="4" fill="none"/>
+                        <path d="M 258 230 Q 238 270 258 320" stroke="#78350f" stroke-width="3" fill="none"/>
+
+                        <!-- Moss Patches on Roots -->
+                        <ellipse cx="200" cy="365" rx="18" ry="6" fill="#10b981" opacity="0.7"/>
+                        <ellipse cx="295" cy="365" rx="22" ry="7" fill="#34d399" opacity="0.7"/>
+
+                        <!-- Dynamic Golden Blossom Container -->
+                        <g id="treeBlossomLayer"></g>
+
+                        <!-- Babbling Brook Water Stream in Foreground -->
+                        <g id="babblingBrook">
+                            <!-- Stream Bed Stones -->
+                            <ellipse cx="140" cy="425" rx="16" ry="8" fill="#475569"/>
+                            <ellipse cx="230" cy="432" rx="22" ry="10" fill="#334155"/>
+                            <ellipse cx="340" cy="422" rx="18" ry="8" fill="#475569"/>
+                            <ellipse cx="390" cy="435" rx="12" ry="6" fill="#1e293b"/>
+
+                            <!-- Water Flow Path -->
+                            <path d="M 50 440 C 150 415, 250 445, 450 420 L 450 450 L 50 450 Z" fill="url(#brookGradient)"/>
+                            
+                            <!-- Animated Brook Waves/Ripples -->
+                            <path class="brook-wave" d="M 70 432 Q 130 422 200 432 T 340 428 T 430 425" stroke="#e0f2fe" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+                            <path class="brook-wave" style="animation-delay: -2s;" d="M 100 440 Q 180 430 260 440 T 400 435" stroke="#bae6fd" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+                            
+                            <!-- Bubbles & Babbling Water Spray -->
+                            <circle cx="160" cy="426" r="2" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="210" cy="434" r="3" fill="#ffffff" opacity="0.8"/>
+                            <circle cx="310" cy="425" r="2.5" fill="#ffffff" opacity="0.85"/>
+                        </g>
+
+                        <!-- Animated Fuzzy Bees: Barnaby & Clover -->
+                        <g id="beeBarnaby" class="animate-bee-1 cursor-pointer" onclick="interactBee('Barnaby')">
+                            <!-- Barnaby Bee (Left) -->
+                            <g transform="translate(110, 140)">
+                                <ellipse cx="0" cy="0" rx="16" ry="12" fill="#FBBF24"/>
+                                <path d="M -8 -10 Q -12 -18 -18 -16" stroke="#1E293B" stroke-width="2.5" fill="none"/>
+                                <circle cx="-18" cy="-16" r="2.5" fill="#F59E0B"/>
+                                <path d="M 8 -10 Q 12 -18 18 -16" stroke="#1E293B" stroke-width="2.5" fill="none"/>
+                                <circle cx="18" cy="-16" r="2.5" fill="#F59E0B"/>
+                                <path d="M -8 -8 Q 0 -5 8 -8" stroke="#1E293B" stroke-width="3.5" fill="none"/>
+                                <path d="M -12 0 Q 0 3 12 0" stroke="#1E293B" stroke-width="3.5" fill="none"/>
+                                <path d="M -10 8 Q 0 11 10 8" stroke="#1E293B" stroke-width="3.5" fill="none"/>
+                                <ellipse cx="-8" cy="-12" rx="8" ry="12" fill="rgba(255,255,255,0.8)" transform="rotate(-25 -8 -12)"/>
+                                <ellipse cx="8" cy="-12" rx="8" ry="12" fill="rgba(255,255,255,0.8)" transform="rotate(25 8 -12)"/>
+                                <circle cx="-4" cy="-2" r="2" fill="#0F172A"/>
+                                <circle cx="4" cy="-2" r="2" fill="#0F172A"/>
+                                <circle cx="-7" cy="2" r="2" fill="#F43F5E" opacity="0.6"/>
+                                <circle cx="7" cy="2" r="2" fill="#F43F5E" opacity="0.6"/>
+                            </g>
+                        </g>
+
+                        <g id="beeClover" class="animate-bee-2 cursor-pointer" onclick="interactBee('Clover')">
+                            <!-- Clover Bee (Right) -->
+                            <g transform="translate(370, 180)">
+                                <ellipse cx="0" cy="0" rx="15" ry="11" fill="#FBBF24"/>
+                                <path d="M -6 -8 Q -10 -16 -16 -14" stroke="#1E293B" stroke-width="2.5" fill="none"/>
+                                <circle cx="-16" cy="-14" r="2.5" fill="#F59E0B"/>
+                                <path d="M 6 -8 Q 10 -16 16 -14" stroke="#1E293B" stroke-width="2.5" fill="none"/>
+                                <circle cx="16" cy="-14" r="2.5" fill="#F59E0B"/>
+                                <path d="M -7 -6 Q 0 -3 7 -6" stroke="#1E293B" stroke-width="3" fill="none"/>
+                                <path d="M -10 1 Q 0 4 10 1" stroke="#1E293B" stroke-width="3" fill="none"/>
+                                <ellipse cx="-6" cy="-10" rx="7" ry="10" fill="rgba(255,255,255,0.8)" transform="rotate(-20 -6 -10)"/>
+                                <ellipse cx="6" cy="-10" rx="7" ry="10" fill="rgba(255,255,255,0.8)" transform="rotate(20 6 -10)"/>
+                                <circle cx="-3" cy="-1" r="1.8" fill="#0F172A"/>
+                                <circle cx="3" cy="-1" r="1.8" fill="#0F172A"/>
+                                <circle cx="-6" cy="2" r="1.8" fill="#F43F5E" opacity="0.6"/>
+                                <circle cx="6" cy="2" r="1.8" fill="#F43F5E" opacity="0.6"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="mt-3 flex items-center justify-between w-full text-xs text-teal-200/70 italic px-1">
+                    <span><i class="fa-solid fa-hand-pointer text-amber-300 mr-1"></i> Tap Barnaby or Clover for bee wisdom</span>
+                    <span><i class="fa-solid fa-water text-sky-300 mr-1"></i> Babbling Brook</span>
+                </div>
+            </div>
+
+            <!-- Honey Jar Dopamine Reward Progress Engine -->
+            <div class="glass-panel rounded-3xl p-5 relative">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2 text-amber-300 font-heading text-lg font-semibold">
+                        <i class="fa-solid fa-jar text-amber-400"></i>
+                        <span>Nectar Honey Jar Meter</span>
+                    </div>
+                    <span id="honeyPercentage" class="text-amber-300 font-bold text-sm">0% Full</span>
+                </div>
+
+                <div class="relative w-full bg-slate-900/80 rounded-2xl h-7 p-1 border border-amber-500/30 overflow-hidden">
+                    <div id="honeyProgressBar" class="h-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 rounded-xl transition-all duration-700 w-0 shadow-lg relative">
+                        <!-- Shimmer Light -->
+                        <div class="absolute inset-0 bg-white/20 rounded-xl animate-pulse"></div>
+                    </div>
+                </div>
+
+                <p id="honeyJarStatus" class="text-xs text-amber-100/80 mt-2 text-center">
+                    Complete tasks to collect honey nectar! Fill the jar to bloom golden Oak flowers.
+                </p>
+            </div>
+
+            <!-- ADHD Dopamine Focus Timer -->
+            <div class="glass-panel rounded-3xl p-5 flex flex-col items-center">
+                <div class="flex items-center justify-between w-full mb-3">
+                    <div class="flex items-center gap-2 text-emerald-300 font-heading text-lg font-semibold">
+                        <i class="fa-solid fa-hourglass-half text-emerald-400"></i>
+                        <span>Forest Focus Timer</span>
+                    </div>
+                    <button id="audioToggleBtn" onclick="toggleAudioChimes()" class="text-xs bg-teal-900/60 hover:bg-teal-800/80 text-teal-200 border border-teal-500/40 px-3 py-1 rounded-full transition flex items-center gap-1.5">
+                        <i id="audioIcon" class="fa-solid fa-volume-high text-amber-300"></i>
+                        <span id="audioText">Forest Chimes: ON</span>
+                    </button>
+                </div>
+
+                <div class="text-4xl md:text-5xl font-extrabold text-amber-200 tracking-wider font-heading my-2" id="timerDisplay">
+                    25:00
+                </div>
+
+                <div class="flex items-center gap-2 my-2">
+                    <button onclick="setTimerPreset(15)" class="text-xs bg-slate-800/80 hover:bg-slate-700 text-teal-200 px-2.5 py-1 rounded-lg border border-teal-500/20">15m Sprint</button>
+                    <button onclick="setTimerPreset(25)" class="text-xs bg-slate-800/80 hover:bg-slate-700 text-teal-200 px-2.5 py-1 rounded-lg border border-teal-500/20">25m Focus</button>
+                    <button onclick="setTimerPreset(45)" class="text-xs bg-slate-800/80 hover:bg-slate-700 text-teal-200 px-2.5 py-1 rounded-lg border border-teal-500/20">45m Deep Work</button>
+                </div>
+
+                <div class="flex items-center gap-3 mt-3 w-full">
+                    <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold py-2.5 px-4 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                        <i id="timerPlayIcon" class="fa-solid fa-play"></i>
+                        <span id="timerBtnText">Start Focus</span>
+                    </button>
+                    <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 text-teal-200 p-2.5 rounded-2xl border border-teal-500/30 transition" title="Reset Timer">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Column: Task Sanctuary Dashboard (7 Cols) -->
+        <section class="lg:col-span-7 flex flex-col gap-6">
+
+            <!-- Task Creation & Quick Templates Panel -->
+            <div class="glass-panel rounded-3xl p-5 md:p-6 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold font-heading text-amber-200 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+                        <span>Sprout New Task</span>
+                    </h2>
+                    <!-- Quick Templates Dropdown Toggle -->
+                    <div class="relative">
+                        <button onclick="toggleQuickTemplates()" class="text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-bolt text-yellow-300"></i>
+                            <span>Quick Templates</span>
+                        </button>
+                        <!-- Quick Templates Menu -->
+                        <div id="quickTemplatesMenu" class="hidden absolute right-0 mt-2 w-64 glass-panel rounded-2xl p-2 z-30 shadow-2xl border border-amber-400/30">
+                            <div class="text-xs font-semibold text-teal-200/80 px-2 py-1 border-b border-teal-500/20 mb-1">Teaching Tasks</div>
+                            <button onclick="applyTemplate('Grade Assignment Papers', 'Teaching', 'High')" class="w-full text-left text-xs text-amber-100 hover:bg-teal-800/50 p-2 rounded-xl transition flex items-center justify-between">
+                                <span>📝 Grade Assignment Papers</span>
+                            </button>
+                            <button onclick="applyTemplate('Prepare Daily Lesson Plan', 'Teaching', 'Medium')" class="w-full text-left text-xs text-amber-100 hover:bg-teal-800/50 p-2 rounded-xl transition flex items-center justify-between">
+                                <span>📚 Prepare Lesson Plan</span>
+                            </button>
+                            <div class="text-xs font-semibold text-teal-200/80 px-2 py-1 border-b border-teal-500/20 my-1">Personal Tasks</div>
+                            <button onclick="applyTemplate('Hydrate & Take Water Break', 'Personal', 'Urgent')" class="w-full text-left text-xs text-amber-100 hover:bg-teal-800/50 p-2 rounded-xl transition flex items-center justify-between">
+                                <span>💧 Hydrate & Water Break</span>
+                            </button>
+                            <button onclick="applyTemplate('Organize Desk & Workspace', 'Personal', 'Low')" class="w-full text-left text-xs text-amber-100 hover:bg-teal-800/50 p-2 rounded-xl transition flex items-center justify-between">
+                                <span>🧹 Organize Workspace</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Form -->
+                <form id="addTaskForm" onsubmit="handleAddTask(event)" class="flex flex-col gap-3">
+                    <div class="flex flex-col md:flex-row gap-3">
+                        <input type="text" id="taskTitleInput" placeholder="What task shall the bees guard for you?..." required
+                            class="flex-1 bg-slate-900/80 border border-teal-500/30 focus:border-amber-400 rounded-2xl px-4 py-3 text-sm text-amber-50 placeholder-teal-300/40 focus:outline-none transition">
+                        
+                        <div class="flex gap-2">
+                            <select id="taskCategorySelect" class="bg-slate-900/80 border border-teal-500/30 text-teal-200 rounded-2xl px-3 py-3 text-sm focus:outline-none focus:border-amber-400">
+                                <option value="Teaching">🏫 Teaching</option>
+                                <option value="Personal">🌿 Personal</option>
+                            </select>
+
+                            <select id="taskPrioritySelect" class="bg-slate-900/80 border border-teal-500/30 text-teal-200 rounded-2xl px-3 py-3 text-sm focus:outline-none focus:border-amber-400">
+                                <option value="Normal">Normal</option>
+                                <option value="Urgent">🔥 Urgent</option>
+                                <option value="High">⭐ High</option>
+                                <option value="Low">🌱 Low</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <i class="fa-regular fa-clock text-teal-300/70 text-sm"></i>
+                            <input type="date" id="taskDeadlineInput" class="bg-slate-900/80 border border-teal-500/30 text-teal-200 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:border-amber-400 w-full sm:w-auto">
+                        </div>
+
+                        <button type="submit" class="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-bold px-6 py-2.5 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Task</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Task Filter Controls & Task List -->
+            <div class="glass-panel rounded-3xl p-5 md:p-6 shadow-xl flex-1 flex flex-col">
+                <!-- Filters Header -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-teal-500/20">
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-lg font-bold font-heading text-amber-200">Active Tasks</h3>
+                        <span id="activeTaskCount" class="bg-teal-500/20 text-teal-300 text-xs px-2.5 py-0.5 rounded-full border border-teal-400/30 font-semibold">0</span>
+                    </div>
+
+                    <!-- Category Filter Tabs -->
+                    <div class="flex items-center gap-1.5 bg-slate-900/60 p-1 rounded-2xl border border-teal-500/20 text-xs">
+                        <button onclick="setFilter('All')" id="filterAllBtn" class="px-3 py-1 rounded-xl font-medium bg-amber-400 text-slate-950 shadow">All</button>
+                        <button onclick="setFilter('Teaching')" id="filterTeachingBtn" class="px-3 py-1 rounded-xl font-medium text-teal-200 hover:bg-teal-800/40">🏫 Teaching</button>
+                        <button onclick="setFilter('Personal')" id="filterPersonalBtn" class="px-3 py-1 rounded-xl font-medium text-teal-200 hover:bg-teal-800/40">🌿 Personal</button>
+                        <button onclick="setFilter('Urgent')" id="filterUrgentBtn" class="px-3 py-1 rounded-xl font-medium text-teal-200 hover:bg-teal-800/40">🔥 Urgent</button>
+                    </div>
+                </div>
+
+                <!-- Empty State Message -->
+                <div id="emptyTaskState" class="hidden my-8 flex flex-col items-center justify-center text-center p-6 border-2 border-dashed border-teal-500/20 rounded-2xl">
+                    <div class="w-16 h-16 bg-amber-400/10 rounded-full flex items-center justify-center text-amber-300 text-2xl mb-3">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h4 class="text-base font-semibold text-amber-200">Your Garden is Peaceful</h4>
+                    <p class="text-xs text-teal-200/70 max-w-xs mt-1">No pending tasks found! Add a task above or use a template to begin collecting honey.</p>
+                </div>
+
+                <!-- Task Cards Container -->
+                <div id="taskListContainer" class="flex flex-col gap-3 overflow-y-auto max-h-[420px] pr-1">
+                    <!-- Tasks will be injected dynamically here -->
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Custom Notification/Message Modal (Never using alert) -->
+    <div id="notificationModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel max-w-sm w-full rounded-3xl p-6 border border-amber-400/40 text-center flex flex-col items-center shadow-2xl relative animate-bounce-short">
+            <div id="modalIconContainer" class="w-16 h-16 bg-amber-400/20 rounded-full flex items-center justify-center text-amber-300 text-3xl mb-3">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            <h3 id="modalTitle" class="text-xl font-bold font-heading text-amber-200 mb-1">Blossom Unlocked!</h3>
+            <p id="modalMessage" class="text-sm text-teal-100/90 mb-5">You completed tasks and earned a new golden flower on the Sacred Oak!</p>
+            <button onclick="closeModal()" class="w-full bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-950 font-bold py-2.5 rounded-2xl shadow-lg transition text-sm">
+                Glorious! Bzz!
+            </button>
+        </div>
+    </div>
+
+    <!-- Application Logic Script -->
+    <script>
+        // State Management
+        let tasks = JSON.parse(localStorage.getItem('sanctuary_tasks')) || [
+            {
+                id: 1,
+                title: "Review & Grade Student Math Worksheets",
+                category: "Teaching",
+                priority: "High",
+                deadline: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+                completed: false,
+                createdAt: Date.now()
+            },
+            {
+                id: 2,
+                title: "Hydrate & Enjoy 10-Min Nature Walk",
+                category: "Personal",
+                priority: "Urgent",
+                deadline: new Date().toISOString().split('T')[0],
+                completed: false,
+                createdAt: Date.now() - 1000
+            }
+        ];
+
+        let currentFilter = 'All';
+        let blossomCount = parseInt(localStorage.getItem('sanctuary_blossoms')) || 0;
+        let honeyNectarLevel = parseInt(localStorage.getItem('sanctuary_honey')) || 0; // 0 to 100
+
+        // Timer State
+        let timerSeconds = 25 * 60;
+        let timerInitialSeconds = 25 * 60;
+        let timerInterval = null;
+        let isTimerRunning = false;
+        let audioChimesEnabled = true;
+
+        // Mascot Prompts for ADHD Encouragement
+        const mascotQuotes = [
+            "Barnaby says: Breaking tasks into micro-steps works wonders!",
+            "Clover says: Every little drop of honey counts toward our Sacred Oak!",
+            "Barnaby says: Don't forget to sip some water while you conquer this task!",
+            "Clover says: You are doing splendidly! The forest chimes celebrate you!",
+            "Barnaby says: High five! Let's get that dopamine blooming!"
+        ];
+
+        // Web Audio Synthesizer for Forest Chimes (No external broken audio dependencies)
+        let audioCtx = null;
+
+        function playForestChimeSound() {
+            if (!audioChimesEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                // Play soft pentatonic forest bell tone
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+
+                    const startTime = audioCtx.currentTime + (idx * 0.12);
+                    gain.gain.setValueAtTime(0.001, startTime);
+                    gain.gain.exponentialRampToValueAtTime(0.2, startTime + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.2);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(startTime);
+                    osc.stop(startTime + 1.2);
+                });
+            } catch (e) {
+                console.log("Web Audio not allowed without user interaction first.");
+            }
+        }
+
+        // Initialize App on DOM Load
+        window.onload = function() {
+            renderTasks();
+            updateHoneyJarUI();
+            renderGoldenBlossoms();
+            spawnPollenParticles();
+            rotateMascotQuote();
+            setInterval(rotateMascotQuote, 14000);
+        };
+
+        // Render Golden Blossoms on SVG Tree
+        function renderGoldenBlossoms() {
+            const blossomLayer = document.getElementById('treeBlossomLayer');
+            if (!blossomLayer) return;
+
+            blossomLayer.innerHTML = '';
+            
+            // Predefined blossom positions on tree canopy
+            const canopyPositions = [
+                {x: 220, y: 120}, {x: 280, y: 130}, {x: 180, y: 170}, 
+                {x: 320, y: 160}, {x: 240, y: 180}, {x: 150, y: 210}, 
+                {x: 350, y: 210}, {x: 200, y: 230}, {x: 290, y: 220}, 
+                {x: 250, y: 80}, {x: 190, y: 100}, {x: 310, y: 100}
+            ];
+
+            const count = Math.min(blossomCount, canopyPositions.length);
+            document.getElementById('blossomCountBadge').innerText = `✨ ${blossomCount} Golden Blossom${blossomCount === 1 ? '' : 's'}`;
+
+            for (let i = 0; i < count; i++) {
+                const pos = canopyPositions[i];
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
+                g.setAttribute('class', 'glow-fairy');
+
+                // Render Flower SVG
+                g.innerHTML = `
+                    <circle cx="0" cy="-6" r="5" fill="#FBBF24" opacity="0.9"/>
+                    <circle cx="6" cy="0" r="5" fill="#FBBF24" opacity="0.9"/>
+                    <circle cx="0" cy="6" r="5" fill="#FBBF24" opacity="0.9"/>
+                    <circle cx="-6" cy="0" r="5" fill="#FBBF24" opacity="0.9"/>
+                    <circle cx="0" cy="0" r="4.5" fill="#FEF08A"/>
+                `;
+                blossomLayer.appendChild(g);
+            }
+        }
+
+        // Spawn Pollen Particle Effects in Canvas
+        function spawnPollenParticles() {
+            const container = document.getElementById('pollenContainer');
+            if (!container) return;
+
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute rounded-full bg-amber-300/60 blur-[1px] pointer-events-none';
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animation = `floatBee1 ${5 + Math.random() * 5}s infinite ease-in-out`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Mascot Interaction
+        function interactBee(name) {
+            playForestChimeSound();
+            showModal(`Bzz! ${name} is cheering for you!`, `${name} flew down from the Sacred Oak to remind you that taking small steps builds magnificent progress!`);
+        }
+
+        function rotateMascotQuote() {
+            const el = document.getElementById('mascotMessage');
+            if (el) {
+                const randomQuote = mascotQuotes[Math.floor(Math.random() * mascotQuotes.length)];
+                el.innerText = `"${randomQuote}"`;
+            }
+        }
+
+        // Quick Add Templates
+        function toggleQuickTemplates() {
+            const menu = document.getElementById('quickTemplatesMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function applyTemplate(title, category, priority) {
+            document.getElementById('taskTitleInput').value = title;
+            document.getElementById('taskCategorySelect').value = category;
+            document.getElementById('taskPrioritySelect').value = priority;
+            document.getElementById('taskDeadlineInput').value = new Date().toISOString().split('T')[0];
+            toggleQuickTemplates();
+        }
+
+        // Add Task Handler
+        function handleAddTask(e) {
+            e.preventDefault();
+            const titleInput = document.getElementById('taskTitleInput');
+            const title = titleInput.value.trim();
+            if (!title) return;
+
+            const category = document.getElementById('taskCategorySelect').value;
+            const priority = document.getElementById('taskPrioritySelect').value;
+            const deadline = document.getElementById('taskDeadlineInput').value || new Date().toISOString().split('T')[0];
+
+            const newTask = {
+                id: Date.now(),
+                title,
+                category,
+                priority,
+                deadline,
+                completed: false,
+                createdAt: Date.now()
+            };
+
+            tasks.unshift(newTask);
+            saveTasks();
+            titleInput.value = '';
+            renderTasks();
+            playForestChimeSound();
+        }
+
+        // Save to LocalStorage
+        function saveTasks() {
+            localStorage.setItem('sanctuary_tasks', JSON.stringify(tasks));
+        }
+
+        // Filter Logic
+        function setFilter(filter) {
+            currentFilter = filter;
+            ['All', 'Teaching', 'Personal', 'Urgent'].forEach(f => {
+                const btn = document.getElementById(`filter${f}Btn`);
+                if (f === filter) {
+                    btn.className = "px-3 py-1 rounded-xl font-medium bg-amber-400 text-slate-950 shadow";
+                } else {
+                    btn.className = "px-3 py-1 rounded-xl font-medium text-teal-200 hover:bg-teal-800/40";
+                }
+            });
+            renderTasks();
+        }
+
+        // Task Completion & Nectar Dopamine Effect
+        function toggleTaskComplete(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+
+            task.completed = !task.completed;
+            saveTasks();
+
+            if (task.completed) {
+                playForestChimeSound();
+                triggerFlyingNectarBee();
+                
+                // Add Honey Progress
+                honeyNectarLevel += 25;
+                if (honeyNectarLevel >= 100) {
+                    honeyNectarLevel = 0;
+                    blossomCount += 1;
+                    localStorage.setItem('sanctuary_blossoms', blossomCount);
+                    renderGoldenBlossoms();
+                    
+                    // Confetti dopamine explosion
+                    try {
+                        confetti({
+                            particleCount: 80,
+                            spread: 70,
+                            origin: { y: 0.6 }
+                        });
+                    } catch(e) {}
+
+                    showModal('🌸 Sacred Blossom Unlocked!', 'Your Honey Jar reached 100%! Barnaby and Clover planted a new golden flower on the Celtic Tree of Life!');
+                }
+
+                localStorage.setItem('sanctuary_honey', honeyNectarLevel);
+                updateHoneyJarUI();
+            }
+
+            renderTasks();
+        }
+
+        function triggerFlyingNectarBee() {
+            const bee = document.createElement('div');
+            bee.className = 'flying-nectar-bee text-3xl';
+            bee.innerHTML = '🐝🍯';
+            bee.style.right = '10%';
+            bee.style.bottom = '15%';
+            document.body.appendChild(bee);
+
+            setTimeout(() => {
+                bee.remove();
+            }, 1800);
+        }
+
+        function updateHoneyJarUI() {
+            const bar = document.getElementById('honeyProgressBar');
+            const percentText = document.getElementById('honeyPercentage');
+            if (bar && percentText) {
+                bar.style.width = `${honeyNectarLevel}%`;
+                percentText.innerText = `${honeyNectarLevel}% Full`;
+            }
+        }
+
+        // Delete Task
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+        }
+
+        // Render Tasks in UI
+        function renderTasks() {
+            const container = document.getElementById('taskListContainer');
+            const emptyState = document.getElementById('emptyTaskState');
+
+            let filtered = tasks;
+            if (currentFilter === 'Teaching') filtered = tasks.filter(t => t.category === 'Teaching');
+            if (currentFilter === 'Personal') filtered = tasks.filter(t => t.category === 'Personal');
+            if (currentFilter === 'Urgent') filtered = tasks.filter(t => t.priority === 'Urgent');
+
+            document.getElementById('activeTaskCount').innerText = filtered.filter(t => !t.completed).length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            container.innerHTML = filtered.map(task => {
+                const isUrgent = task.priority === 'Urgent';
+                const isTeaching = task.category === 'Teaching';
+
+                return `
+                    <div class="glass-card rounded-2xl p-4 flex items-center justify-between gap-3 ${task.completed ? 'opacity-60 bg-slate-900/40' : ''}">
+                        <div class="flex items-center gap-3 flex-1 min-w-0">
+                            <!-- Custom Checkbox -->
+                            <button onclick="toggleTaskComplete(${task.id})" class="w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${task.completed ? 'bg-amber-400 border-amber-400 text-slate-950' : 'border-teal-400/50 hover:border-amber-400'}">
+                                ${task.completed ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+                            </button>
+
+                            <div class="flex flex-col min-w-0 flex-1">
+                                <span class="text-sm font-semibold ${task.completed ? 'line-through text-teal-200/50' : 'text-amber-50'} truncate">
+                                    ${escapeHtml(task.title)}
+                                </span>
+
+                                <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                    <!-- Category Tag -->
+                                    <span class="text-[10px] px-2 py-0.5 rounded-md font-medium ${isTeaching ? 'bg-teal-500/20 text-teal-300 border border-teal-400/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'}">
+                                        ${isTeaching ? '🏫 Teaching' : '🌿 Personal'}
+                                    </span>
+
+                                    <!-- Priority Tag -->
+                                    <span class="text-[10px] px-2 py-0.5 rounded-md font-medium ${isUrgent ? 'bg-rose-500/20 text-rose-300 border border-rose-400/30 animate-pulse' : 'bg-slate-800 text-teal-200/70'}">
+                                        ${task.priority === 'Urgent' ? '🔥 Urgent' : task.priority}
+                                    </span>
+
+                                    <!-- Deadline Tag -->
+                                    <span class="text-[10px] text-teal-200/60 flex items-center gap-1">
+                                        <i class="fa-regular fa-calendar-check text-[9px]"></i>
+                                        ${task.deadline}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete Button -->
+                        <button onclick="deleteTask(${task.id})" class="text-teal-300/40 hover:text-rose-400 p-2 rounded-xl hover:bg-rose-500/10 transition" title="Delete Task">
+                            <i class="fa-solid fa-trash-can text-sm"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // HTML Escape Guard
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+
+        // ADHD Focus Timer Logic
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            document.getElementById('timerDisplay').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                document.getElementById('timerPlayIcon').className = 'fa-solid fa-play';
+                document.getElementById('timerBtnText').innerText = 'Resume Focus';
+            } else {
+                isTimerRunning = true;
+                document.getElementById('timerPlayIcon').className = 'fa-solid fa-pause';
+                document.getElementById('timerBtnText').innerText = 'Pause Focus';
+
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        playForestChimeSound();
+                        showModal('🎉 Focus Sprint Completed!', 'Splendid work! Take a breath, stretch, and let Barnaby and Clover celebrate your dedicated focus period!');
+                        resetTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = timerInitialSeconds;
+            updateTimerDisplay();
+            document.getElementById('timerPlayIcon').className = 'fa-solid fa-play';
+            document.getElementById('timerBtnText').innerText = 'Start Focus';
+        }
+
+        function setTimerPreset(minutes) {
+            timerInitialSeconds = minutes * 60;
+            timerSeconds = timerInitialSeconds;
+            resetTimer();
+        }
+
+        function toggleAudioChimes() {
+            audioChimesEnabled = !audioChimesEnabled;
+            document.getElementById('audioText').innerText = `Forest Chimes: ${audioChimesEnabled ? 'ON' : 'OFF'}`;
+            document.getElementById('audioIcon').className = audioChimesEnabled ? 'fa-solid fa-volume-high text-amber-300' : 'fa-solid fa-volume-xmark text-slate-400';
+            if (audioChimesEnabled) playForestChimeSound();
+        }
+
+        // Modal Message System (Replacement for alert)
+        function showModal(title, message) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('notificationModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('notificationModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
